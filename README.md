@@ -1,6 +1,6 @@
 # LeetCode DSA Practice
 
-This repository contains my daily practice solutions to LeetCode problems, categorized by topic for easy access and revision.
+This repository contains structured solutions to LeetCode problems, organized by topic. The goal is to build consistency in solving data structures and algorithms (DSA) questions while maintaining clean and efficient code.
 
 ## 📚 Folder Structure
 
@@ -11,16 +11,12 @@ This repository contains my daily practice solutions to LeetCode problems, categ
 - Graphs/
 - Trees/
 
-## ✅ Problems Solved
+## 🎯 Objectives
 
-- [x] Two Sum (Array, HashMap)
-
-## 🎯 Purpose
-
-- To build daily consistency in DSA problem solving
-- To improve problem-solving speed for coding interviews
-- To prepare for technical interviews at top companies like Atlassian, Uber, etc.
+- Develop a disciplined approach to DSA practice
+- Enhance problem-solving speed and accuracy
 
 ---
-Happy Solving! 🚀
+
+*This repository is actively maintained and updated weekly.*
 
