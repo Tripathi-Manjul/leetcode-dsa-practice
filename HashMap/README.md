@@ -15,21 +15,21 @@ This directory tracks problems based on hash-based lookups, frequency counting, 
 | Majority vote logic (O(1) space) | Majority Element (LC #169)                     | Boyer-Moore Voting Algorithm     |
 ---
 
-##Generalized Frequency Count Template (Manual `dict`)
+# Generalized Frequency Count Template (Manual `dict`)
 
 ```python
 freq_map = {}
 
 for char in s:
     freq_map[char] = freq_map.get(char, 0) + 1
+```
 
-
-##Generalized Frequency Count Template (Using Counter)
+# Generalized Frequency Count Template (Using Counter)
 from collections import Counter
 
 freq_map = Counter(s)
 
-#Boyer-Moore Voting Algorithm – Explanation and Use Case
+# Boyer-Moore Voting Algorithm – Explanation and Use Case
 ⏱ Time and Space Complexity
 
     Time Complexity: O(n) – single traversal
@@ -59,7 +59,7 @@ The Boyer-Moore Voting Algorithm is a space-optimized technique for finding the 
 
     Return candidate — guaranteed to be the majority
 
-
+```python
 class Solution:
     def majorityElement(self, nums: List[int]) -> int:
         count = 0
@@ -71,3 +71,4 @@ class Solution:
             count += (1 if num == candidate else -1)
 
         return candidate
+```
