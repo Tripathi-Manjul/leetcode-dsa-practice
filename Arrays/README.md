@@ -2,11 +2,6 @@
 
 This README explains the differences between the **Container With Most Water** and **Trapping Rain Water** problems, outlines their solution approaches, and provides guidance for maintaining your repository.
 
-## File Naming
-
-- **Filename:** `README.md`  
-- **Location:** Place this file at the root of the `TwoPointers/` directory (or your main project root) so it is immediately visible.
-
 ## 1. Problem Summaries
 
 ### 1.1 Container With Most Water
@@ -43,7 +38,10 @@ def maxArea(height: list[int]) -> int:
         else:
             right -= 1
     return max_area
+```
 
+### 3.2 Trapping Rain Water
+```python
 def trap(height: list[int]) -> int:
     left, right = 0, len(height) - 1
     left_max = right_max = 0
@@ -62,3 +60,4 @@ def trap(height: list[int]) -> int:
                 water += right_max - height[right]
             right -= 1
     return water
+```
