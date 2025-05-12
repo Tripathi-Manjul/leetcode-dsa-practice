@@ -17,6 +17,26 @@ A technique to reduce nested loops in problems involving substrings, subarrays, 
 
 ---
 
+## 🧠 Sliding Window Template
+
+```python
+def sliding_window(s):
+    left = 0
+    window_data = set()  # or dict for frequency
+    max_result = 0
+    
+    for right in range(len(s)):
+        # Handle duplicates/constraint violation
+        while s[right] in window_data:
+            window_data.remove(s[left])
+            left += 1
+        
+        window_data.add(s[right])
+        max_result = max(max_result, right - left + 1)
+    
+    return max_result
+```
+
 ## 🧠 General Template
 
 ### Fixed-Length Window (with frequency array/map):
@@ -36,18 +56,26 @@ for i in range(len(pattern), len(s)):
     window_count[s[i]] += 1
     if window_count == target_count:
         result.append(i - len(pattern) + 1)
+```
 
-#Variable-Length Window:
-left = 0
-char_map = {}
-for right in range(len(s)):
-    # Expand window
-    char_map[s[right]] += 1
+### Variable-Length Window:
+```python
+def variable_window(s):
+    from collections import defaultdict
 
-    while <invalid_window_condition>:
-        # Contract window
-        char_map[s[left]] -= 1
-        left += 1
+    left = 0
+    window_count = defaultdict(int)
 
-    # Record result if valid
+    for right in range(len(s)):
+        window_count[s[right]] += 1
+
+        # Shrink window if invalid
+        while <invalid_window_condition>:
+            window_count[s[left]] -= 1
+            if window_count[s[left]] == 0:
+                del window_count[s[left]]
+            left += 1
+
+        # Process valid window (e.g., update max length, store indices)
+```
 
