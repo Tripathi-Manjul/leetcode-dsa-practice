@@ -4,6 +4,15 @@ This directory contains curated problems and reference notes for the **Sliding W
 
 ---
 
+## 🔍 When to Use Sliding Window
+
+Use the sliding window pattern when:
+- The problem involves **contiguous subarrays/substrings**.
+- You are asked to find the **maximum/minimum/target condition** in a subarray.
+- The input is a **linear structure** (string, array).
+- Brute force uses nested loops; you want to optimize to O(n).
+
+
 ## 📚 What is Sliding Window?
 
 A technique to reduce nested loops in problems involving substrings, subarrays, or contiguous sequences by maintaining a "window" over the input and moving it efficiently.
@@ -16,6 +25,10 @@ A technique to reduce nested loops in problems involving substrings, subarrays, 
 | Variable-length | Window expands/contracts dynamically | Longest substring without repetition, minimal window substring |
 
 ---
+
+## window size calculation 
+`right - left + 1` 
+- This represents the current size of the window from `left` to `right` (inclusive).
 
 ## 🧠 Sliding Window Template
 
