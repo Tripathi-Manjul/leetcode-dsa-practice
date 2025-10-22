@@ -54,6 +54,26 @@ Space Complexity: O(H) (recursion stack, H = tree height)
 Interview Note:
     ✅ Preferred first in interviews because it is clean and intuitive.
     🚫 May hit recursion depth limit in extremely deep trees.
+
+Visualizing Recursive Return Flow
+
+maxDepth(3)
+ ├── maxDepth(9)
+ │    ├── maxDepth(None) → 0
+ │    └── maxDepth(None) → 0
+ │    returns 1 + max(0, 0) = 1
+ └── maxDepth(20)
+      ├── maxDepth(15)
+      │    ├── maxDepth(None) → 0
+      │    └── maxDepth(None) → 0
+      │    returns 1 + max(0, 0) = 1
+      └── maxDepth(7)
+           ├── maxDepth(None) → 0
+           └── maxDepth(None) → 0
+           returns 1 + max(0, 0) = 1
+      returns 1 + max(1, 1) = 2
+returns 1 + max(1, 2) = 3
+
 """
 
 class SolutionRecursive:
@@ -81,6 +101,14 @@ Why BFS here:
 
 Time Complexity: O(N)
 Space Complexity: O(W), where W = maximum width of the tree
+
+BFS Execution Summary Table
+| Level | Queue Before | Nodes Processed | Queue After | Depth After |
+| ----- | ------------ | --------------- | ----------- | ----------- |
+| 1     | [3]          | 3               | [9, 20]     | 1           |
+| 2     | [9, 20]      | 9, 20           | [15, 7]     | 2           |
+| 3     | [15, 7]      | 15, 7           | []          | 3           |
+
 """
 
 class SolutionIterative:
