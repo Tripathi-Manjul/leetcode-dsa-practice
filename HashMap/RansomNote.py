@@ -58,3 +58,34 @@ class Solution:
         # All characters in ransomNote are sufficiently available in magazine
         return True
 
+# Solution 3: Single Hashmap Used
+from collections import Counter
+
+class Solution:
+    def canConstruct(self, ransomNote: str, magazine: str) -> bool:
+        # Step 1: Build a frequency map of magazine characters.
+        # Counter creates a hash map where:
+        # key = character, value = number of times it appears in magazine.
+        # We only need this, because ransomNote will be validated against it.
+        mag_count = Counter(magazine)
+
+        # Step 2: Iterate through each character in ransomNote.
+        # We avoid building Counter for ransomNote to reduce extra memory usage
+        # and demonstrate efficient constraint handling in interviews.
+        for char in ransomNote:
+
+            # Step 3: Check if the current character is available in magazine frequency map.
+            # If value is 0, it means either:
+            # (a) the char never existed in magazine, or
+            # (b) it existed but has already been fully used once.
+            if mag_count[char] == 0:
+                return False  # Cannot construct ransomNote as this char is exhausted.
+
+            # Step 4: Decrement frequency since each character can only be used once.
+            # This ensures we respect the single-use constraint.
+            mag_count[char] -= 1
+
+        # Step 5: If all characters passed availability checks, return True.
+        return True
+
+ 
