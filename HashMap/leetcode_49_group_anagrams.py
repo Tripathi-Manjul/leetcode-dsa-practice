@@ -4,54 +4,63 @@ from collections import defaultdict
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
         """
-        Problem:
-        --------
-        Given an array of strings, group the anagrams together.
-        Return the groups in any order.
+        Groups a set of words into anagram clusters using a frequency-vector
+        hashing strategy.
 
-        An anagram is a word formed by rearranging the letters of another word.
-        Example: "eat", "tea", "ate" are all anagrams.
+        Explanation of the key design decisions:
+        ----------------------------------------
 
-        Approach:
-        ---------
-        - Use a hashmap (dictionary) where:
-          Key   = a signature that uniquely identifies an anagram group
-          Value = list of words belonging to that group
+        1. Frequency Vector as Signature:
+           Each word is transformed into a 26-length frequency vector representing
+           the counts of characters 'a' through 'z'. Two words are anagrams if and
+           only if their frequency vectors are identical.
 
-        - For the key, instead of sorting (O(m log m)), we use a 
-          fixed-size frequency count of characters (O(m)).
+        2. Why the key must be a tuple, not a list:
+           - Python dictionary keys must be hashable, which requires immutability.
+           - Lists are mutable, so they are not hashable and cannot be used as keys.
+           - Tuples are immutable and hashable; therefore the frequency list must be
+             converted to a tuple before being used as a dictionary key.
 
-          Example:
-          word = "eat"
-          count array = [1, 0, 0, ..., 1, 0, ..., 1, 0 ...] 
-                        (1 for 'a', 1 for 'e', 1 for 't')
+             Example:
+               freq = [1,0,0,...]     # Not hashable → invalid as a dictionary key
+               tuple(freq)            # Hashable → valid key
 
-        - Convert this count array into a tuple (immutable, hashable),
-          and use it as a dictionary key.
+           Using tuple(freq) ensures that all words with identical character
+           distributions map to the same dictionary key.
 
-        - Append the original word into the dictionary entry.
+        3. Why defaultdict(list) is used:
+           defaultdict(list) automatically initializes an empty list for any new key.
+           This eliminates the need for conditional checks such as:
+               if key not in map: map[key] = []
+           and simplifies the grouping logic.
 
-        - Finally, return the dictionary values as a list of lists.
+        4. Output:
+           The dictionary values contain lists of grouped anagrams. Returning
+           list(map.values()) produces the required list of lists.
+
 
         Complexity:
         -----------
-        n = number of words, m = max length of a word
+        Let n be the number of strings and m be the maximum length of a string.
 
-        Time:  O(n * m)   # counting characters for each word
-        Space: O(n * m)   # storing frequency signatures + groups
+        Time:  O(n * m)      # Building the frequency vector for each string
+        Space: O(n * m)      # Storing all frequency signatures and grouped words
         """
 
-        # dictionary where key = tuple(counts), value = list of words
-        res = defaultdict(list)
+        # Map: (frequency signature) → list of anagrams
+        groups = defaultdict(list)
 
-        for s in strs:
-            # Step 1: Build frequency count for each word
-            count = [0] * 26  # 26 lowercase English letters
-            for c in s:
-                count[ord(c) - ord("a")] += 1
+        for word in strs:
+            # Build frequency vector for 'a' to 'z'
+            freq = [0] * 26
+            for ch in word:
+                freq[ord(ch) - ord('a')] += 1
 
-            # Step 2: Convert to tuple (hashable) and use as key
-            res[tuple(count)].append(s)
+            # Convert frequency list to tuple so it becomes hashable
+            signature = tuple(freq)
 
-        # Step 3: Convert dict_values object to list before returning
-        return list(res.values())
+            # Append the word to its anagram group
+            groups[signature].append(word)
+
+        # Convert the dictionary values to a list of lists
+        return list(groups.values())
